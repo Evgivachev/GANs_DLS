@@ -40,8 +40,12 @@ def conv_norm_relu(in_dim, out_dim, kernel_size, stride=1, padding=0,
 def dconv_norm_relu(in_dim, out_dim, kernel_size, stride=1, padding=0, output_padding=0,
                     norm_layer=nn.BatchNorm2d, bias=False):
     return nn.Sequential(
-        nn.ConvTranspose2d(in_dim, out_dim, kernel_size, stride,
-                           padding, output_padding, bias=bias),
+        nn.Upsample(scale_factor=2, mode='bilinear'),
+        nn.ReflectionPad2d(1),
+        nn.Conv2d(in_dim, out_dim,
+                  kernel_size=3, stride=1, padding=0),
+        #nn.ConvTranspose2d(in_dim, out_dim, kernel_size, stride,
+        #                   padding, output_padding, bias=bias),
         norm_layer(out_dim), nn.ReLU(True))
 
 

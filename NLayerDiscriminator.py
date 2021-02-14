@@ -19,6 +19,7 @@ class NLayerDiscriminator(nn.Module):
         dis_model += [conv_norm_lrelu(ndf * nf_mult_prev, ndf * nf_mult, kernel_size=4, stride=1,
                                                norm_layer= norm_layer, padding=1, bias=use_bias)]
         dis_model += [nn.Conv2d(ndf * nf_mult, 1, kernel_size=4, stride=1, padding=1)]
+        dis_model += [nn.Sigmoid()]
 
         self.dis_model = nn.Sequential(*dis_model)
 
